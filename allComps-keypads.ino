@@ -3,6 +3,7 @@
  * leds
  * push button
  * 4x4 keypads
+ * 8x8 Led Matrix
  *****************************************************************************************************/
 // cmd+P to open command palatte, type '>' for all Arduino menu options
 // disabled vscode-clang c/c++ command adapter extension to get rid of arduino.h file not found red underline
@@ -81,11 +82,42 @@ void setup()
     pinMode(GPIO_LED_RED, OUTPUT);
     pinMode(GPIO_LED_BLUE, OUTPUT);
     */
-    Matrix_Setup();
+    LedMatrix_Setup();
 
     //Serial.begin(9600);
 }
+//-----------------------------------------------------------------------------------------------------
+// Main loop
+void loop()
+{
+    LedMatrix_Run();
+    /*
+    pushButton_control(GPIO_BUTTON_RED);
 
+    if (IsButtonToggled(pushCounter_redButton))
+    {
+        digitalWrite(GPIO_LED_RED, HIGH);
+    }else{
+        digitalWrite(GPIO_LED_RED, LOW);
+    }
+
+    //keypad controls
+    char key = kpd.getKey();
+    if(key)
+    {
+        switch(key)
+        {
+            case '1':
+            digitalWrite(GPIO_LED_BLUE, HIGH);
+            break;
+            case '2':
+            digitalWrite(GPIO_LED_BLUE, LOW);
+            break;
+        }
+    }
+    */
+
+}
 //-----------------------------------------------------------------------------------------------------
 // Public Prototypes
 
@@ -116,39 +148,4 @@ bool IsButtonToggled(int buttonCounter)
         return true;
     }
     return false;
-}
-
-
-
-//-----------------------------------------------------------------------------------------------------
-// Main loop
-void loop()
-{
-    Matrix_Run();
-    /*
-    pushButton_control(GPIO_BUTTON_RED);
-
-    if (IsButtonToggled(pushCounter_redButton))
-    {
-        digitalWrite(GPIO_LED_RED, HIGH);
-    }else{
-        digitalWrite(GPIO_LED_RED, LOW);
-    }
-
-    //keypad controls
-    char key = kpd.getKey();
-    if(key)
-    {
-        switch(key)
-        {
-            case '1':
-            digitalWrite(GPIO_LED_BLUE, HIGH);
-            break;
-            case '2':
-            digitalWrite(GPIO_LED_BLUE, LOW);
-            break;
-        }
-    }
-    */
-
 }

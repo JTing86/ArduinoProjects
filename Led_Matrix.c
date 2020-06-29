@@ -1,7 +1,7 @@
 #include "Led_Matrix.h"
 
 // bring called in the loop
-void Matrix_Run(void)
+void LedMatrix_Run(void)
 {
    for (int k = 0; k < 1000; k++) {
     display_Character(I);
@@ -15,7 +15,7 @@ void Matrix_Run(void)
 }
 
 // bring called in the setup
-void Matrix_Setup(void)
+void LedMatrix_Setup(void)
 {
     // 8x8 matrix Pin configuration
     pinMode(GPIO_SR_LATCH, OUTPUT);
