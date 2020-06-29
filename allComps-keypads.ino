@@ -5,6 +5,9 @@
  * 4x4 keypads
  *****************************************************************************************************/
 // cmd+P to open command palatte, type '>' for all Arduino menu options
+// disabled vscode-clang c/c++ command adapter extension to get rid of arduino.h file not found red underline
+
+
 // #include <Particle.h>  // for particle projects
 #include <Arduino.h>
 //#include <Keypad.h>
@@ -56,59 +59,12 @@ typedef enum{
 }PUSHBUTTON_STATE_e;
 */
 
-/*
-byte I[8] = {     B01111100,
-                  B00010000,
-                  B00010000,
-                  B00010000,
-                  B00010000,
-                  B00010000,
-                  B00010000,
-                  B01111100
-                };
-byte HEART[8] = { B00000000,
-                  B01101100,
-                  B11111110,
-                  B01111100,
-                  B00111000,
-                  B00010000,
-                  B00000000,
-                  B00000000
-                };
-
-byte LIN[8] = {   B00000100,
-                  B00100100,
-                  B11111111,
-                  B01110100,
-                  B10101110,
-                  B10110101,
-                  B00100100,
-                  B00000100
-                };  
-byte MOM[8] = {   B00001110,
-                  B10100010,
-                  B11101010,
-                  B10101111,
-                  B01000001,
-                  B10101101,
-                  B00000001,
-                  B00000111
-                };
-                
-int GPIO_SR_CLK = 5;
-int GPIO_SR_LATCH = 4; // pins connected to shift registors
-int GPIO_SR_DATA = 3;
-
-int GPIO_MATRIX_COLS [8] = {6, 7, 8, 9, 10, 11, 12, 13}; // maps column 1-8
-
-*/
 //-----------------------------------------------------------------------------------------------------
 // variables
 int pushCounter_redButton = 0;
 //int state_redButton = 0;
 int button_red_curr_state = LOW;
 int button_red_prev_state = LOW;
-
 
 
 //-----------------------------------------------------------------------------------------------------
@@ -125,16 +81,7 @@ void setup()
     pinMode(GPIO_LED_RED, OUTPUT);
     pinMode(GPIO_LED_BLUE, OUTPUT);
     */
-
-    // 8x8 matrix Pin configuration
-    pinMode(GPIO_SR_LATCH, OUTPUT);
-    pinMode(GPIO_SR_CLK, OUTPUT);
-    pinMode(GPIO_SR_DATA, OUTPUT);
-
-    for (int i = 0; i < 8; i++) {
-        pinMode(GPIO_MATRIX_COLS[i], OUTPUT);
-        digitalWrite(GPIO_MATRIX_COLS[i], HIGH);
-    }
+    Matrix_Setup();
 
     //Serial.begin(9600);
 }
@@ -177,17 +124,7 @@ bool IsButtonToggled(int buttonCounter)
 // Main loop
 void loop()
 {
-
-   for (int k = 0; k < 1000; k++) {
-    display_Character(I);
-   }
-   for (int k = 0; k < 1000; k++) {
-    display_Character(HEART);
-   }
-   for (int k = 0; k < 1000; k++) {
-    display_Character(MOM);
-   }
-
+    Matrix_Run();
     /*
     pushButton_control(GPIO_BUTTON_RED);
 

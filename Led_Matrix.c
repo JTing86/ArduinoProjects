@@ -1,5 +1,32 @@
 #include "Led_Matrix.h"
 
+// bring called in the loop
+void Matrix_Run(void)
+{
+   for (int k = 0; k < 1000; k++) {
+    display_Character(I);
+   }
+   for (int k = 0; k < 1000; k++) {
+    display_Character(HEART);
+   }
+   for (int k = 0; k < 1000; k++) {
+    display_Character(MOM);
+   }
+}
+
+// bring called in the setup
+void Matrix_Setup(void)
+{
+    // 8x8 matrix Pin configuration
+    pinMode(GPIO_SR_LATCH, OUTPUT);
+    pinMode(GPIO_SR_CLK, OUTPUT);
+    pinMode(GPIO_SR_DATA, OUTPUT);
+
+    for (int i = 0; i < 8; i++) {
+        pinMode(GPIO_MATRIX_COLS[i], OUTPUT);
+        digitalWrite(GPIO_MATRIX_COLS[i], HIGH);
+    }
+}
 void display_Character(byte ch[8])
 {
   for (int j = 0; j < 8; j++) {
