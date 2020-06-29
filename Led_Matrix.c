@@ -1,5 +1,4 @@
 #include "Led_Matrix.h"
-/*
 
 void display_Character(byte ch[8])
 {
@@ -33,4 +32,3 @@ void shiftRegister_Write(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, ui
 		digitalWrite(clockPin, LOW);		
 	}
 }
-*/

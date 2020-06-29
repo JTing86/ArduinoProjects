@@ -11,7 +11,7 @@
 
 //use Arduino Library Manager to install and include new libraries
 //#include "Keypad_defs.h"
-//#include "Led_Matrix.h"
+#include "Led_Matrix.h"
 
 
 //-----------------------------------------------------------------------------------------------------
@@ -55,6 +55,8 @@ typedef enum{
     PUSHBUTTON_ON  = 1,
 }PUSHBUTTON_STATE_e;
 */
+
+/*
 byte I[8] = {     B01111100,
                   B00010000,
                   B00010000,
@@ -99,9 +101,7 @@ int GPIO_SR_DATA = 3;
 
 int GPIO_MATRIX_COLS [8] = {6, 7, 8, 9, 10, 11, 12, 13}; // maps column 1-8
 
-
-void display_Character(byte ch[8]);
-void shiftRegister_Write(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
+*/
 //-----------------------------------------------------------------------------------------------------
 // variables
 int pushCounter_redButton = 0;
@@ -171,37 +171,6 @@ bool IsButtonToggled(int buttonCounter)
     return false;
 }
 
-void display_Character(byte ch[8])
-{
-  for (int j = 0; j < 8; j++) {
-    digitalWrite(GPIO_SR_LATCH, LOW);
-    digitalWrite(GPIO_MATRIX_COLS[j], LOW);
-
-    shiftRegister_Write(GPIO_SR_DATA, GPIO_SR_CLK, MSBFIRST, ch[j]);
-    digitalWrite(GPIO_SR_LATCH, HIGH);
-    //delay(1);
-    digitalWrite(GPIO_SR_LATCH, LOW);
-    shiftRegister_Write(GPIO_SR_DATA, GPIO_SR_CLK, MSBFIRST, B00000000); // to get rid of flicker when
-    digitalWrite(GPIO_SR_LATCH, HIGH);
-    digitalWrite(GPIO_MATRIX_COLS[j], HIGH);
-
-  }
-}
-
-void shiftRegister_Write(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val)
-{
-	uint8_t i;
-
-	for (i = 0; i < 8; i++)  {
-		if (bitOrder == LSBFIRST)
-			digitalWrite(dataPin, !!(val & (1 << i)));
-		else	
-			digitalWrite(dataPin, !!(val & (1 << (7 - i))));
-			
-		digitalWrite(clockPin, HIGH);
-		digitalWrite(clockPin, LOW);		
-	}
-}
 
 
 //-----------------------------------------------------------------------------------------------------
