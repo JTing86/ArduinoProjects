@@ -7,6 +7,7 @@
  *****************************************************************************************************/
 // cmd+P to open command palatte, type '>' for all Arduino menu options
 // disabled vscode-clang c/c++ command adapter extension to get rid of arduino.h file not found red underline
+// added "defines" : [ "USBCON"] to get rid of Serial red underline
 
 
 // #include <Particle.h>  // for particle projects
@@ -71,7 +72,9 @@ int button_red_prev_state = LOW;
 //-----------------------------------------------------------------------------------------------------
 void setup()
 {
-    printf("JT's arduino project ready");
+    Serial.begin(9600);
+
+    Serial.println("JT's arduino project ready");
 
     // inputs
     /*
@@ -83,14 +86,13 @@ void setup()
     pinMode(GPIO_LED_BLUE, OUTPUT);
     */
     LedMatrix_Setup();
-
-    //Serial.begin(9600);
 }
 //-----------------------------------------------------------------------------------------------------
 // Main loop
 void loop()
 {
     LedMatrix_Run();
+    Serial.print("1");
     /*
     pushButton_control(GPIO_BUTTON_RED);
 
