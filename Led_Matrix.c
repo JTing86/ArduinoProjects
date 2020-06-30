@@ -1,15 +1,19 @@
 #include "Led_Matrix.h"
 
-// bring called in the loop
+
+int interval = 200;
+
+
+// being called in the loop
 void LedMatrix_Run(void)
 {
-   for (int k = 0; k < 1000; k++) {
+   for (int k = 0; k < interval; k++) {
     display_Character(I);
    }
-   for (int k = 0; k < 1000; k++) {
+   for (int k = 0; k < interval; k++) {
     display_Character(HEART);
    }
-   for (int k = 0; k < 1000; k++) {
+   for (int k = 0; k < interval; k++) {
     display_Character(MOM);
    }
 }

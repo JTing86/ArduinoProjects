@@ -16,50 +16,21 @@
 
 //use Arduino Library Manager to install and include new libraries
 //#include "Keypad_defs.h"
-#include "Led_Matrix.h"
-
+//#include "Led_Matrix.h"
+#include "JoyStick.h"
 
 //-----------------------------------------------------------------------------------------------------
 // pin initializations
-/*
-int GPIO_LED_RED = 8;
-int GPIO_LED_BLUE = 9;
-int GPIO_BUTTON_RED = 2;
 
-//4x4 keypad 
-// wiring instruction, Left -> Right: R1-R4,C1-C4
-int GPIO_KEYPAD_R1 = 10;
-int GPIO_KEYPAD_R2 = 11;
-int GPIO_KEYPAD_R3 = 12;
-int GPIO_KEYPAD_R4 = 13;
-int GPIO_KEYPAD_C1 = 19; //pin A5-A0 =19-16
-int GPIO_KEYPAD_C2 = 18;
-int GPIO_KEYPAD_C3 = 17;
-int GPIO_KEYPAD_C4 = 16;
-
-const byte ROWS = 4; // Four rows
-const byte COLS = 4; // Four columns
-
-// Define the Keymap
-char keys[ROWS][COLS] = {
-  {'1','2','3','A'},
-  {'4','5','6','B'},
-  {'7','8','9','C'},
-  {'#','0','*','D'}
-};
-
-byte colPins[COLS] = { 19, 18, 17, 16 }; // Row 0 to 3
-byte rowPins[ROWS] = { 10, 11, 12, 13 }; // Col 0 to 3
-
-Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
-
-*/
 /*
 typedef enum{
     PUSHBUTTON_OFF = 0,
     PUSHBUTTON_ON  = 1,
 }PUSHBUTTON_STATE_e;
 */
+// game controller button (4 directions)
+const int GPIO_JOY_X = A0;
+const int GPIO_JOY_Y = A1;
 
 //-----------------------------------------------------------------------------------------------------
 // variables
@@ -68,13 +39,15 @@ int pushCounter_redButton = 0;
 int button_red_curr_state = LOW;
 int button_red_prev_state = LOW;
 
+int joy_X_value,joy_Y_value, xMap, yMap = 0;
+
 
 //-----------------------------------------------------------------------------------------------------
 void setup()
 {
     Serial.begin(9600);
+    Serial.println("JT's arduino project ready\n");
 
-    Serial.println("JT's arduino project ready");
 
     // inputs
     /*
@@ -85,14 +58,17 @@ void setup()
     pinMode(GPIO_LED_RED, OUTPUT);
     pinMode(GPIO_LED_BLUE, OUTPUT);
     */
-    LedMatrix_Setup();
+    //LedMatrix_Setup();
 }
 //-----------------------------------------------------------------------------------------------------
 // Main loop
 void loop()
 {
-    LedMatrix_Run();
-    Serial.print("1");
+    //Serial.print("Led matrix starting: \n");
+    //LedMatrix_Run();
+
+    JoyStick_Run();
+
     /*
     pushButton_control(GPIO_BUTTON_RED);
 
@@ -122,6 +98,23 @@ void loop()
 }
 //-----------------------------------------------------------------------------------------------------
 // Public Prototypes
+void JoyStick_Run(void)
+{
+    joy_X_value = analogRead(GPIO_JOY_X);
+    joy_Y_value = analogRead(GPIO_JOY_Y);
+
+    xMap = map(joy_X_value, 0,1023, 0, 7);
+    yMap = map(joy_Y_value,0,1023,7,0);
+  //print the values with to plot or view
+    Serial.print(xMap);
+    Serial.print(",\t");
+    Serial.println(yMap);
+}
+
+ int convert_analogIn(int data)
+ {
+    return (data * 9 / 1024) + 48;
+ }
 
 //this function detects rising edge and increment the pushButtonCounter
 void pushButton_control(int pinIN)
