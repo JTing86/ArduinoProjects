@@ -1,5 +1,7 @@
 #include "JoyStick.h"
+#include <Arduino.h>
 
+//no setting up GPIO direction is required for Joystick analog pin
 
 //-----------------------------------------------------------------------------------------------------
 // pin initializations
@@ -17,7 +19,7 @@ int joy_X_value,joy_Y_value, xMap, yMap = 0;
 //-----------------------------------------------------------------------------------------------------
 // Public Prototypes
 
-void JoyStick_Run(void)
+PIXEL_t JoyStick__Get_Position(void)
 {
     joy_X_value = analogRead(GPIO_JOY_X);
     joy_Y_value = analogRead(GPIO_JOY_Y);
@@ -29,3 +31,4 @@ void JoyStick_Run(void)
     Serial.print(",\t");
     Serial.println(yMap);
 }
+

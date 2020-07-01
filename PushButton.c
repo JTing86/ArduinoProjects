@@ -1,5 +1,6 @@
 #include "PushButton.h"
-
+#include <stdbool.h>
+#include <Arduino.h>
 
 const int GPIO_BUTTON_RED = 3;
 const int GPIO_LED_BLUE = 4;

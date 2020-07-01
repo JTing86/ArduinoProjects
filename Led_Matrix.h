@@ -1,14 +1,32 @@
 #ifndef _LED_MATRIX_H_
 #define _LED_MATRIX_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <Arduino.h>
 
 
+//-----------------------------------------------------------------------------------------------------
+// Public Prototypes
 
-void LedMatrix_Run(void);
-void LedMatrix_Setup(void);
-void display_Character(byte ch[8]);
+void LED_Matrix__Run(void);
+void LED_Matrix__Setup(void);
+void LED_Matrix__Reset(void);
+void LED_Matrix__Home_Screen(void);
+
+void LED_Matrix__Draw_Pixel(int x_value, int y_value);
+void LED_Matrix__Draw_Patteren(byte ch[8]);
+
+
+//-----------------------------------------------------------------------------------------------------
+// Private Prototypes
 void shiftRegister_Write(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 
@@ -58,4 +76,24 @@ byte rowPins[ROWS] = { 10, 11, 12, 13 }; // Col 0 to 3
 
 Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 
-*/
+
+
+// below is called in loop
+*/ 
+
+    /*
+    //keypad controls
+    char key = kpd.getKey();
+    if(key)
+    {
+        switch(key)
+        {
+            case '1':
+            digitalWrite(GPIO_LED_BLUE, HIGH);
+            break;
+            case '2':
+            digitalWrite(GPIO_LED_BLUE, LOW);
+            break;
+        }
+    }
+    */
