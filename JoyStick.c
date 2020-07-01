@@ -21,14 +21,19 @@ int joy_X_value,joy_Y_value, xMap, yMap = 0;
 
 PIXEL_t JoyStick__Get_Position(void)
 {
+    PIXEL_t current_pos;
     joy_X_value = analogRead(GPIO_JOY_X);
     joy_Y_value = analogRead(GPIO_JOY_Y);
 
-    xMap = map(joy_X_value, 0,1023, 0, 7);
-    yMap = map(joy_Y_value,0,1023,7,0);
+    current_pos.x_pos = map(joy_X_value, 0,1021, 0, 7);
+    current_pos.y_pos = map(joy_Y_value, 0,1021, 7, 0);
+
+    return current_pos;
   //print the values with to plot or view
+  /*
     Serial.print(xMap);
     Serial.print(",\t");
     Serial.println(yMap);
+    */
 }
 

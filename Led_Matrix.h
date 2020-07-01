@@ -5,8 +5,7 @@
 extern "C" {
 #endif
 
-#include <Arduino.h>
-
+#include <stdint.h>
 
 //-----------------------------------------------------------------------------------------------------
 // Public Prototypes
@@ -17,7 +16,7 @@ void LED_Matrix__Reset(void);
 void LED_Matrix__Home_Screen(void);
 
 void LED_Matrix__Draw_Pixel(int x_value, int y_value);
-void LED_Matrix__Draw_Patteren(byte ch[8]);
+void LED_Matrix__Draw_Patteren(uint8_t ch[8]);
 
 
 //-----------------------------------------------------------------------------------------------------

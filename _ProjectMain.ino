@@ -14,6 +14,7 @@
 //use Arduino Library Manager to install and include new libraries
 // #include <Particle.h>  // for particle projects
 #include <Arduino.h>
+#include <stdint.h>
 //#include <Keypad.h>
 
 #include "JoyStick.h"
@@ -37,19 +38,25 @@ void setup()
     
     LED_Matrix__Setup();
     LED_Matrix__Home_Screen();
+    LED_Matrix__Reset();
+    
 }
 //-----------------------------------------------------------------------------------------------------
 // Main loop
+PIXEL_t current_pixel;
 void loop()
 {
     //Serial.print("Led matrix starting: \n");
-
-
-    PIXEL_t current_pixel;
+    
     current_pixel = JoyStick__Get_Position();
+    Serial.print(current_pixel.x_pos);
+    Serial.print(",\t");
+    Serial.println(current_pixel.y_pos);
+
+    LED_Matrix__Reset();
+    //LED_Matrix__Draw_Pixel(5, 3);
     LED_Matrix__Draw_Pixel(current_pixel.x_pos, current_pixel.y_pos);
-
-
+    delay(1);
 }
 //-----------------------------------------------------------------------------------------------------
 // Public Prototypes
