@@ -1,8 +1,8 @@
 #include "Led_Matrix.h"
 
-int GPIO_SR_CLK = 5;
-int GPIO_SR_LATCH = 4; // pins connected to shift registors
-int GPIO_SR_DATA = 3;
+const int GPIO_SR_CLK = 5;
+const int GPIO_SR_LATCH = 4; // pins connected to shift registors
+const int GPIO_SR_DATA = 3;
 
 int GPIO_MATRIX_COLS [8] = {6, 7, 8, 9, 10, 11, 12, 13}; // maps column 1-8
 
@@ -75,6 +75,8 @@ void LedMatrix_Setup(void)
         digitalWrite(GPIO_MATRIX_COLS[i], HIGH);
     }
 }
+
+
 void display_Character(byte ch[8])
 {
   for (int j = 0; j < 8; j++) {
