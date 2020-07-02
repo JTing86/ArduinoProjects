@@ -22,6 +22,7 @@ void LED_Matrix__Draw_Patteren(uint8_t ch[8]);
 //-----------------------------------------------------------------------------------------------------
 // Private Prototypes
 void shiftRegister_Write(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val);
+uint8_t invert_bits(uint8_t data);
 
 #ifdef __cplusplus
 }

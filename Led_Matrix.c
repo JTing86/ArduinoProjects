@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "Led_Matrix.h"
 
+//TODO use 2 shift registers for input for improvement
 const int GPIO_SR_CLK = 5;
 const int GPIO_SR_LATCH = 4; // pins connected to shift registors
 const int GPIO_SR_DATA = 3;
@@ -138,21 +139,39 @@ void LED_Matrix__Home_Screen(void)
 void LED_Matrix__Draw_Pixel(int x_value, int y_value) //x: col,  y: row
 {
   // to turn on col3,row4, just need to pull col high and attatch row 4 to groud
-    digitalWrite(GPIO_MATRIX_COLS[x_value], LOW);
+/*
+    for (int i=0; i<matrix_len;i++)
+    {
+      if (i != x_value)
+      {
+        digitalWrite(GPIO_MATRIX_COLS[y_value], HIGH);
+      }
+    }*/
     uint8_t mask = 0x00;
-    mask = B10000000 >> (y_value);
+    mask = B10000000 >> (x_value);
+    int zero=0;
+    uint8_t inverted_mask = invert_bits(mask);
+
+  for (int i = 0; i <= 7; i++)
+    if (i != y_value)
+      digitalWrite(GPIO_MATRIX_COLS[i], HIGH);
 
     digitalWrite(GPIO_SR_LATCH, LOW);
-    
     shiftRegister_Write(GPIO_SR_DATA, GPIO_SR_CLK, MSBFIRST, mask);
-    digitalWrite(GPIO_SR_LATCH, HIGH); //SR would copy data from internal storage to output when LATCH goes from LOW to HIGH
-  
-    delay(100);
-    digitalWrite(GPIO_SR_LATCH, LOW);
-    shiftRegister_Write(GPIO_SR_DATA, GPIO_SR_CLK, MSBFIRST, B00000000); //pre defined binary in arduino
     digitalWrite(GPIO_SR_LATCH, HIGH);
   
-    digitalWrite(GPIO_MATRIX_COLS[x_value], HIGH);
+  delay(1);
+  
+  // make all the columns low again except our row
+  for (int i = 0; i <= 7; i++)
+    if (i != y_value)
+      digitalWrite(GPIO_MATRIX_COLS[i], LOW);
+
+    digitalWrite(GPIO_SR_LATCH, LOW);
+    shiftRegister_Write(GPIO_SR_DATA, GPIO_SR_CLK, MSBFIRST,inverted_mask) ;
+    digitalWrite(GPIO_SR_LATCH, HIGH);
+  
+    //digitalWrite(GPIO_MATRIX_COLS[x_value], HIGH);
 }
 
 void LED_Matrix__Draw_Patteren(uint8_t ch[8])
@@ -185,7 +204,27 @@ void shiftRegister_Write(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, ui
 		else	
 			digitalWrite(dataPin, !!(val & (1 << (7 - i))));
 			
-		digitalWrite(clockPin, HIGH);
+		digitalWrite(clockPin, HIGH); //date gets sent to internal storage at falling edge
 		digitalWrite(clockPin, LOW);		
 	}
+}
+
+uint8_t invert_bits(uint8_t data)
+{
+  uint8_t mask=1;
+  uint8_t value=0;
+
+  for(int i=0;i<8;i++)
+  {
+    if ((data & mask )!= 0)
+    {
+      value ++;
+    }
+    if (i != 7)
+    {
+      value <<= 1;
+      mask <<= 1;
+    }
+  }
+  return value;
 }
