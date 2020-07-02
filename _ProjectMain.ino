@@ -15,7 +15,6 @@
 // #include <Particle.h>  // for particle projects
 #include <Arduino.h>
 #include <stdint.h>
-//#include <Keypad.h>
 
 #include "JoyStick.h"
 #include "PushButton.h"
