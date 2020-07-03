@@ -3,6 +3,9 @@
         {
             "name": "Mac",
             "includePath": [
+                "/Users/jingting/Documents/Arduino/libraries/MQTT/src",
+                "/Users/jingting/Documents/Arduino/libraries/ArduinoMqtt/src",
+                "/Users/jingting/Documents/Arduino/libraries/ArduinoMqttClient/src",
                 "/Users/jingting/Documents/Arduino/libraries/Keypad/src",
                 "/Users/jingting/Library/Arduino15/packages/arduino/tools/**",
                 "/Users/jingting/Library/Arduino15/packages/arduino/hardware/avr/1.6.23/**"
