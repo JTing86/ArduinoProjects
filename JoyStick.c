@@ -5,7 +5,7 @@
 
 //-----------------------------------------------------------------------------------------------------
 // pin initializations
-
+/*
 // game controller button (4 directions)
 const int GPIO_JOY_X = A0;
 const int GPIO_JOY_Y = A1;
@@ -34,6 +34,6 @@ PIXEL_t JoyStick__Get_Position(void)
     Serial.print(xMap);
     Serial.print(",\t");
     Serial.println(yMap);
-    */
 }
+    */
 
